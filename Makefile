@@ -1,5 +1,5 @@
 PKG_NAME := pam-gnupg
-URL = https://github.com/acpica/acpica.git
+URL = https://github.com/cruegge/pam-gnupg.git
 ARCHIVES = 
 ARCHIVES_GIT = 
 

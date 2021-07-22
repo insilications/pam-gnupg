@@ -3,4 +3,5 @@
 automake-dev
 libtool-dev
 gnupg
-gnupg-dev
+Linux-PAM
+Linux-PAM-dev
