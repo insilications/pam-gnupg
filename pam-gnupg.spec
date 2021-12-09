@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : pam-gnupg
 Version  : 0.3
-Release  : 102
+Release  : 501
 URL      : file:///aot/build/clearlinux/packages/pam-gnupg/pam-gnupg-v0.3.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/pam-gnupg/pam-gnupg-v0.3.tar.gz
 Summary  : No detailed summary available
@@ -29,6 +29,16 @@ A PAM module that hands over your login password to `gpg-agent`, which can be
 useful if you are using a GnuPG-based password manager like
 [pass](https://www.passwordstore.org/).
 
+%package dev
+Summary: dev components for the pam-gnupg package.
+Group: Development
+Provides: pam-gnupg-devel = %{version}-%{release}
+Requires: pam-gnupg = %{version}-%{release}
+
+%description dev
+dev components for the pam-gnupg package.
+
+
 %package libexec
 Summary: libexec components for the pam-gnupg package.
 Group: Default
@@ -47,7 +57,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1638024507
+export SOURCE_DATE_EPOCH=1639093727
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -125,18 +135,23 @@ export FONTCONFIG_PATH=/usr/share/defaults/fonts
 ## altflags1 end
 sd -r '\s--dirty\s' ' ' .
 sd -r 'git describe' 'git describe --abbrev=0' .
-%reconfigure
+%autogen  --disable-static \
+--enable-shared \
+--with-moduledir=/usr/lib64/security
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 
 %install
-export SOURCE_DATE_EPOCH=1638024507
+export SOURCE_DATE_EPOCH=1639093727
 rm -rf %{buildroot}
 %make_install
 
 %files
 %defattr(-,root,root,-)
-/lib/security/pam_gnupg.so
+
+%files dev
+%defattr(-,root,root,-)
+/usr/lib64/security/pam_gnupg.so
 
 %files libexec
 %defattr(-,root,root,-)
