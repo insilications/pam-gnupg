@@ -1,0 +1,3 @@
+--disable-static
+--enable-shared
+--with-moduledir=/usr/lib64/security
